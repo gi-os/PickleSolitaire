@@ -1,3 +1,10 @@
+# v1.6.0
+
+- Restyled the bottom bar as a compass instead of a plain row, to match
+  the native grey bar's own layout on this device: a center "Select"
+  pill (D-pad center/OK) with New (top), Undo (left), Draw (right), and
+  Back (bottom) arranged around it.
+
 # v1.5.0
 
 - Best-guess fix for the grey system softkey bar: forced immersive/
