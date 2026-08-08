@@ -1,3 +1,11 @@
+# v1.8.2
+
+- Rebuilt the softkey bar as three side-by-side sections (left column /
+  Select / right column) instead of absolutely-positioned corners over a
+  shared center. On a narrow bar the old corner boxes were wider than
+  the Select chip and got covered by it; a Row layout can't do that —
+  each section only ever gets the width it's actually given.
+
 # v1.8.1
 
 - Corner labels now sized to their own quadrant and centered inside it,

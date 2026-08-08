@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -156,58 +155,63 @@ fun BoardScreen(state: GameState) {
  */
 @Composable
 private fun SoftkeyCompass() {
-    BoxWithConstraints(
+    // Three side-by-side sections (left column / Select / right column)
+    // instead of absolutely-positioned corners over a shared center — on a
+    // narrow bar, half-the-bar-width corner boxes were wider than the
+    // Select chip itself and got covered by it. A Row can't let that
+    // happen: each section only ever gets the width it's actually given.
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(84.dp)
             .background(SoftkeyBar),
     ) {
-        val quadrantSize = androidx.compose.ui.unit.DpSize(maxWidth / 2, maxHeight / 2)
+        Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
+            SoftkeyCorner("New", Modifier.weight(1f).fillMaxWidth())
+            SoftkeyDividerLine(horizontal = true)
+            SoftkeyCorner("Play", Modifier.weight(1f).fillMaxWidth())
+        }
 
-        // Cross of divider lines defining the four quadrants; the center
-        // Select chip is drawn after these so it sits on top of the crossing.
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxHeight()
-                .width(1.dp)
-                .background(Color(0x33FFFFFF)),
-        )
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxWidth()
-                .height(1.dp)
-                .background(Color(0x33FFFFFF)),
-        )
-
-        // Each label centered within its own quadrant, not just anchored at
-        // the corner — that's what was pushing them oddly close to the
-        // Select chip in the middle.
-        SoftkeyCorner("New", Modifier.align(Alignment.TopStart).size(quadrantSize.width, quadrantSize.height))
-        SoftkeyCorner("Undo", Modifier.align(Alignment.TopEnd).size(quadrantSize.width, quadrantSize.height))
-        SoftkeyCorner("Play", Modifier.align(Alignment.BottomStart).size(quadrantSize.width, quadrantSize.height))
-        SoftkeyCorner("Draw", Modifier.align(Alignment.BottomEnd).size(quadrantSize.width, quadrantSize.height))
+        SoftkeyDividerLine(horizontal = false)
 
         Box(
             modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxHeight()
                 .width(96.dp)
+                .fillMaxHeight()
                 .background(SoftkeySelectBg),
             contentAlignment = Alignment.Center,
         ) {
             Text(text = "Select", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        }
+
+        SoftkeyDividerLine(horizontal = false)
+
+        Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
+            SoftkeyCorner("Undo", Modifier.weight(1f).fillMaxWidth())
+            SoftkeyDividerLine(horizontal = true)
+            SoftkeyCorner("Draw", Modifier.weight(1f).fillMaxWidth())
         }
     }
 }
 
 @Composable
 private fun SoftkeyCorner(label: String, modifier: Modifier) {
-    if (label.isEmpty()) return
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        Text(text = label, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        if (label.isNotEmpty()) {
+            Text(text = label, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        }
     }
+}
+
+@Composable
+private fun SoftkeyDividerLine(horizontal: Boolean) {
+    Box(
+        modifier = if (horizontal) {
+            Modifier.fillMaxWidth().height(1.dp).background(Color(0x33FFFFFF))
+        } else {
+            Modifier.fillMaxHeight().width(1.dp).background(Color(0x33FFFFFF))
+        },
+    )
 }
 
 @Composable
