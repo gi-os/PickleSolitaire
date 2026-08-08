@@ -2,6 +2,8 @@ package com.gios.picklesolitaire
 
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
@@ -53,5 +55,35 @@ class MainActivity : ComponentActivity() {
             }
         }
         return super.dispatchKeyEvent(event)
+    }
+
+    // The KY-42C's own bottom-of-screen softkey bar (the grey strip below our
+    // app's own black one, labeled "Select" by default) doesn't respond to
+    // anything we draw — it's system chrome, not part of our window. This is
+    // the old pre-touchscreen Android convention for populating it: whatever
+    // the Options Menu contains becomes the labeled softkeys underneath.
+    // Untested on real hardware until this build; if it doesn't take, the
+    // grey bar is doing something more OEM-specific than plain Options Menu.
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menu.add(Menu.NONE, MENU_NEW, 0, "New")
+        menu.add(Menu.NONE, MENU_UNDO, 1, "Undo")
+        menu.add(Menu.NONE, MENU_DRAW, 2, "Draw")
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            MENU_NEW -> state.newGame()
+            MENU_UNDO -> state.undo()
+            MENU_DRAW -> state.drawFromStock()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    companion object {
+        private const val MENU_NEW = 1
+        private const val MENU_UNDO = 2
+        private const val MENU_DRAW = 3
     }
 }
