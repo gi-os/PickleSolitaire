@@ -1,3 +1,10 @@
+# v1.7.0
+
+- Corrected the softkey bar layout again: it's not a single row, it's a
+  cross layout matching the real physical keys — F1 (New) top-left, F2
+  (Undo) bottom-left, F3 blank top-right, F4 (Draw) bottom-right, with
+  Select centered over the crossing divider lines.
+
 # v1.6.1
 
 - The v1.6.0 compass guess was wrong — a real screenshot of the native

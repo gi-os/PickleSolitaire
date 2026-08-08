@@ -148,47 +148,59 @@ fun BoardScreen(state: GameState) {
 
 /**
  * Now that immersive mode hides the device's own grey softkey bar (v1.5.0),
- * this owns the full bottom strip. Matches that native bar's actual layout
- * on this device (confirmed from a screenshot, not the compass guess from
- * v1.6.0): one flat row, three flush segments split by full-height divider
- * lines, the center segment lifted a shade lighter as the "main" one.
+ * this owns the full bottom strip. Matches the real physical key layout of
+ * this device: four corner keys (F1 top-left, F2 bottom-left, F3 top-right,
+ * F4 bottom-right) around the D-pad's center Select key, not a single row.
+ * F1=New, F2=Undo, F4=Draw; F3 stays blank on purpose (Touch Cruiser toggle).
  */
 @Composable
 private fun SoftkeyCompass() {
-    Row(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(64.dp)
+            .height(112.dp)
             .background(SoftkeyBar),
     ) {
-        SoftkeySegment("Undo", highlighted = false, modifier = Modifier.weight(1f))
-        SoftkeyDividerLine()
-        SoftkeySegment("New", highlighted = true, modifier = Modifier.weight(1f))
-        SoftkeyDividerLine()
-        SoftkeySegment("Draw", highlighted = false, modifier = Modifier.weight(1f))
+        // Cross of divider lines defining the four quadrants; the center
+        // Select chip is drawn after these so it sits on top of the crossing.
+        Box(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxHeight()
+                .width(1.dp)
+                .background(Color(0x33FFFFFF)),
+        )
+        Box(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(Color(0x33FFFFFF)),
+        )
+
+        SoftkeyCorner("New", Modifier.align(Alignment.TopStart))
+        SoftkeyCorner("", Modifier.align(Alignment.TopEnd))
+        SoftkeyCorner("Undo", Modifier.align(Alignment.BottomStart))
+        SoftkeyCorner("Draw", Modifier.align(Alignment.BottomEnd))
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .background(SoftkeySelectBg)
+                .padding(horizontal = 18.dp, vertical = 8.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(text = "Select", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        }
     }
 }
 
 @Composable
-private fun SoftkeySegment(label: String, highlighted: Boolean, modifier: Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .background(if (highlighted) SoftkeySelectBg else SoftkeyBar),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(text = label, color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+private fun SoftkeyCorner(label: String, modifier: Modifier) {
+    if (label.isEmpty()) return
+    Box(modifier = modifier.padding(14.dp)) {
+        Text(text = label, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
     }
-}
-
-@Composable
-private fun SoftkeyDividerLine() {
-    Box(
-        modifier = Modifier
-            .fillMaxHeight()
-            .width(1.dp)
-            .background(Color(0x33FFFFFF)),
-    )
 }
 
 @Composable
