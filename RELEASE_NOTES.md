@@ -1,3 +1,10 @@
+# v1.7.1
+
+- Undo moved from bottom-left to top-right (that's where F2 actually is);
+  bottom-left is blank now instead. Select pill now fills the bar's full
+  height instead of floating in a padded box. Whole bar shrunk to about
+  3/4 its previous height.
+
 # v1.7.0
 
 - Corrected the softkey bar layout again: it's not a single row, it's a

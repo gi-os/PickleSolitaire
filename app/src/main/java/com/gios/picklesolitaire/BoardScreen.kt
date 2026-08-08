@@ -158,7 +158,7 @@ private fun SoftkeyCompass() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(112.dp)
+            .height(84.dp)
             .background(SoftkeyBar),
     ) {
         // Cross of divider lines defining the four quadrants; the center
@@ -179,15 +179,16 @@ private fun SoftkeyCompass() {
         )
 
         SoftkeyCorner("New", Modifier.align(Alignment.TopStart))
-        SoftkeyCorner("", Modifier.align(Alignment.TopEnd))
-        SoftkeyCorner("Undo", Modifier.align(Alignment.BottomStart))
+        SoftkeyCorner("Undo", Modifier.align(Alignment.TopEnd))
+        SoftkeyCorner("", Modifier.align(Alignment.BottomStart))
         SoftkeyCorner("Draw", Modifier.align(Alignment.BottomEnd))
 
         Box(
             modifier = Modifier
                 .align(Alignment.Center)
-                .background(SoftkeySelectBg)
-                .padding(horizontal = 18.dp, vertical = 8.dp),
+                .fillMaxHeight()
+                .width(72.dp)
+                .background(SoftkeySelectBg),
             contentAlignment = Alignment.Center,
         ) {
             Text(text = "Select", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)

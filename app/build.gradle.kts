@@ -14,8 +14,8 @@ android {
         // minSdk must not exceed 29 or PackageManager refuses the install.
         minSdk = 29
         targetSdk = 34
-        versionCode = 9
-        versionName = "1.7.0"
+        versionCode = 10
+        versionName = "1.7.1"
     }
 
     buildTypes {
