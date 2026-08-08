@@ -1,3 +1,13 @@
+# v1.5.0
+
+- Best-guess fix for the grey system softkey bar: forced immersive/
+  fullscreen mode (`SYSTEM_UI_FLAG_HIDE_NAVIGATION` + `FULLSCREEN` +
+  `IMMERSIVE_STICKY`, reasserted on every focus change). If that bar is
+  Kyocera's OEM navigation bar rather than something we can relabel, this
+  should hide it outright and let our own app-drawn bar take over the
+  full bottom strip instead of sitting above it. Unverified on hardware
+  until this build.
+
 # v1.4.0
 
 - Reverted the v1.3.0 Options Menu experiment. Confirmed on hardware: it
