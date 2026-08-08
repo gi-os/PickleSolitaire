@@ -180,7 +180,7 @@ private fun SoftkeyCompass() {
 
         SoftkeyCorner("New", Modifier.align(Alignment.TopStart))
         SoftkeyCorner("Undo", Modifier.align(Alignment.TopEnd))
-        SoftkeyCorner("", Modifier.align(Alignment.BottomStart))
+        SoftkeyCorner("Play", Modifier.align(Alignment.BottomStart))
         SoftkeyCorner("Draw", Modifier.align(Alignment.BottomEnd))
 
         Box(

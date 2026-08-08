@@ -1,3 +1,9 @@
+# v1.8.0
+
+- Corrected a standing assumption: the Touch Cruiser toggle is a separate
+  physical "III" key, not KEYCODE_F3. F3 (bottom-left) is free, so it's
+  now wired to the same activate action as D-pad center -- labeled "Play".
+
 # v1.7.1
 
 - Undo moved from bottom-left to top-right (that's where F2 actually is);
