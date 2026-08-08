@@ -1,3 +1,10 @@
+# v1.6.1
+
+- The v1.6.0 compass guess was wrong — a real screenshot of the native
+  bar showed the actual layout: one flat row, three segments split by
+  thin full-height divider lines, center segment a shade lighter as the
+  "main" one. Rebuilt to match: Undo | New (highlighted) | Draw.
+
 # v1.6.0
 
 - Restyled the bottom bar as a compass instead of a plain row, to match

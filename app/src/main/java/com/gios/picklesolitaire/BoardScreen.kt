@@ -7,14 +7,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,8 +28,7 @@ import com.gios.picklesolitaire.game.Game
 
 private val Felt = Color(0xFF0B3D0B)
 private val TopBarChip = Color(0xFF14531A)
-private val SoftkeyBar = Color(0xFF1A1A1A)
-private val SoftkeyChipBg = Color(0xFF3A3A3A)
+private val SoftkeyBar = Color(0xFF3A3A3A)
 private val SoftkeySelectBg = Color(0xFF555555)
 
 /**
@@ -150,51 +148,47 @@ fun BoardScreen(state: GameState) {
 
 /**
  * Now that immersive mode hides the device's own grey softkey bar (v1.5.0),
- * this owns the full bottom strip. Styled after that native bar's own
- * layout on this device — a center "Select" pill (the D-pad center/OK key)
- * with the surrounding soft keys arranged around it rather than in a plain
- * row. F3 (right side) is left unlabeled on purpose; it's the device's
- * permanent Touch Cruiser toggle, not something this app should claim.
+ * this owns the full bottom strip. Matches that native bar's actual layout
+ * on this device (confirmed from a screenshot, not the compass guess from
+ * v1.6.0): one flat row, three flush segments split by full-height divider
+ * lines, the center segment lifted a shade lighter as the "main" one.
  */
 @Composable
 private fun SoftkeyCompass() {
-    Box(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(84.dp)
+            .height(64.dp)
             .background(SoftkeyBar),
     ) {
-        SoftkeyChip("New", Modifier.align(Alignment.TopCenter).padding(top = 6.dp))
-        SoftkeyChip("Undo", Modifier.align(Alignment.CenterStart).padding(start = 10.dp))
-        SoftkeyChip("Draw", Modifier.align(Alignment.CenterEnd).padding(end = 10.dp))
-        SoftkeyChip("Back", Modifier.align(Alignment.BottomCenter).padding(bottom = 6.dp))
-        SoftkeySelectDot(modifier = Modifier.align(Alignment.Center))
+        SoftkeySegment("Undo", highlighted = false, modifier = Modifier.weight(1f))
+        SoftkeyDividerLine()
+        SoftkeySegment("New", highlighted = true, modifier = Modifier.weight(1f))
+        SoftkeyDividerLine()
+        SoftkeySegment("Draw", highlighted = false, modifier = Modifier.weight(1f))
     }
 }
 
 @Composable
-private fun SoftkeyChip(label: String, modifier: Modifier) {
+private fun SoftkeySegment(label: String, highlighted: Boolean, modifier: Modifier) {
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(6.dp))
-            .background(SoftkeyChipBg)
-            .padding(horizontal = 10.dp, vertical = 4.dp),
-    ) {
-        Text(text = label, color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-    }
-}
-
-@Composable
-private fun SoftkeySelectDot(modifier: Modifier) {
-    Box(
-        modifier = modifier
-            .size(44.dp)
-            .clip(CircleShape)
-            .background(SoftkeySelectBg),
+            .fillMaxHeight()
+            .background(if (highlighted) SoftkeySelectBg else SoftkeyBar),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text = "Select", color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+        Text(text = label, color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
     }
+}
+
+@Composable
+private fun SoftkeyDividerLine() {
+    Box(
+        modifier = Modifier
+            .fillMaxHeight()
+            .width(1.dp)
+            .background(Color(0x33FFFFFF)),
+    )
 }
 
 @Composable
