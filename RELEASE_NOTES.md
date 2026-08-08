@@ -1,3 +1,12 @@
+# v1.4.0
+
+- Reverted the v1.3.0 Options Menu experiment. Confirmed on hardware: it
+  doesn't map New/Undo/Draw onto the system's grey softkey bar the way
+  native apps do it — it just collapses everything into one generic
+  "Submenu" button at the top-left. No public API on this device does
+  what that bar does; it's OEM-specific. Our own app-drawn bar from
+  v1.2.0 is the real solution and stays as-is.
+
 # v1.3.0
 
 - The v1.2.0 bar we drew ourselves turned out to be redundant: the real
