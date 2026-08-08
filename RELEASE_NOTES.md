@@ -1,3 +1,10 @@
+# v1.8.1
+
+- Corner labels now sized to their own quadrant and centered inside it,
+  instead of anchored right at the corner — fixes the odd spacing that
+  pushed them close to the Select chip. Select chip widened (72dp →
+  96dp) for more breathing room around the text.
+
 # v1.8.0
 
 - Corrected a standing assumption: the Touch Cruiser toggle is a separate

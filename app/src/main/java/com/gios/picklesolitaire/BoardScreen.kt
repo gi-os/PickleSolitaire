@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -155,12 +156,14 @@ fun BoardScreen(state: GameState) {
  */
 @Composable
 private fun SoftkeyCompass() {
-    Box(
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxWidth()
             .height(84.dp)
             .background(SoftkeyBar),
     ) {
+        val quadrantSize = androidx.compose.ui.unit.DpSize(maxWidth / 2, maxHeight / 2)
+
         // Cross of divider lines defining the four quadrants; the center
         // Select chip is drawn after these so it sits on top of the crossing.
         Box(
@@ -178,16 +181,19 @@ private fun SoftkeyCompass() {
                 .background(Color(0x33FFFFFF)),
         )
 
-        SoftkeyCorner("New", Modifier.align(Alignment.TopStart))
-        SoftkeyCorner("Undo", Modifier.align(Alignment.TopEnd))
-        SoftkeyCorner("Play", Modifier.align(Alignment.BottomStart))
-        SoftkeyCorner("Draw", Modifier.align(Alignment.BottomEnd))
+        // Each label centered within its own quadrant, not just anchored at
+        // the corner — that's what was pushing them oddly close to the
+        // Select chip in the middle.
+        SoftkeyCorner("New", Modifier.align(Alignment.TopStart).size(quadrantSize.width, quadrantSize.height))
+        SoftkeyCorner("Undo", Modifier.align(Alignment.TopEnd).size(quadrantSize.width, quadrantSize.height))
+        SoftkeyCorner("Play", Modifier.align(Alignment.BottomStart).size(quadrantSize.width, quadrantSize.height))
+        SoftkeyCorner("Draw", Modifier.align(Alignment.BottomEnd).size(quadrantSize.width, quadrantSize.height))
 
         Box(
             modifier = Modifier
                 .align(Alignment.Center)
                 .fillMaxHeight()
-                .width(72.dp)
+                .width(96.dp)
                 .background(SoftkeySelectBg),
             contentAlignment = Alignment.Center,
         ) {
@@ -199,7 +205,7 @@ private fun SoftkeyCompass() {
 @Composable
 private fun SoftkeyCorner(label: String, modifier: Modifier) {
     if (label.isEmpty()) return
-    Box(modifier = modifier.padding(14.dp)) {
+    Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Text(text = label, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
     }
 }
