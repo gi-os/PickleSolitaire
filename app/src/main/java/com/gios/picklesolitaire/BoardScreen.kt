@@ -149,9 +149,9 @@ fun BoardScreen(state: GameState) {
 /**
  * Now that immersive mode hides the device's own grey softkey bar (v1.5.0),
  * this owns the full bottom strip. Matches the real physical key layout of
- * this device: four corner keys (F1 top-left, F2 bottom-left, F3 top-right,
- * F4 bottom-right) around the D-pad's center Select key, not a single row.
- * F1=New, F2=Undo, F4=Draw; F3 stays blank on purpose (Touch Cruiser toggle).
+ * this device confirmed via getevent: F1 top-left, F2 top-right, F3 bottom-left,
+ * F4 bottom-right, around the D-pad's center Select key.
+ * F1=New, F2=Undo, F3=Play, F4=Draw.
  */
 @Composable
 private fun SoftkeyCompass() {
@@ -166,6 +166,7 @@ private fun SoftkeyCompass() {
             .height(84.dp)
             .background(SoftkeyBar),
     ) {
+        // Left column: F1 (top-left) = New, F3 (bottom-left) = Play
         Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
             SoftkeyCorner("New", Modifier.weight(1f).fillMaxWidth())
             SoftkeyDividerLine(horizontal = true)
@@ -186,6 +187,7 @@ private fun SoftkeyCompass() {
 
         SoftkeyDividerLine(horizontal = false)
 
+        // Right column: F2 (top-right) = Undo, F4 (bottom-right) = Draw
         Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
             SoftkeyCorner("Undo", Modifier.weight(1f).fillMaxWidth())
             SoftkeyDividerLine(horizontal = true)

@@ -66,11 +66,10 @@ class MainActivity : ComponentActivity() {
                 KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> { state.activate(); return true }
 
                 // The four soft keys under the screen — confirmed as plain
-                // KEYCODE_F1-F4 via KeyProbe. Direct shortcuts, no cursor
-                // movement needed. Touch Cruiser's toggle is a separate
-                // physical "III" key, not F3, so F3 gets real use here too:
-                // same action as D-pad center, for playing the focused card
-                // without reaching over to the D-pad.
+                // KEYCODE_F1-F4 via getevent on the actual KY-42C hardware.
+                // Physical layout: F1 top-left, F2 top-right, F3 bottom-left,
+                // F4 bottom-right (NOT F2-bottom-left/F3-top-right as
+                // originally assumed — corrected Aug 2026 via getevent).
                 KeyEvent.KEYCODE_F1 -> { state.newGame(); return true }
                 KeyEvent.KEYCODE_F2 -> { state.undo(); return true }
                 KeyEvent.KEYCODE_F3 -> { state.activate(); return true }
